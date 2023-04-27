@@ -27,11 +27,30 @@ targets_test = testing['label'].to_numpy()
 #Normalize inputs
 inputs_train = inputs_train / 255.0
 inputs_test = inputs_test / 255.0
+
+# afin d'améliorer le CNN, permet de converger plus rapidement et donc obtenir de meilleurs résultats : on calcule moyenne écart type des pixels de l'ensemble d'entraînement, puis on utilise ces statistiques pour centrer et réduire la variance des pixels de l'ensemble d'entraînement et de test. Cette normalisation permet de ramener les valeurs des pixels à une échelle commune centrée autour de zéro et avec une variance de 1. 
+# # Additional normalization
+# mean = np.mean(inputs_train)
+# std = np.std(inputs_train)
+# inputs_train = (inputs_train - mean) / std
+# inputs_test = (inputs_test - mean) / std
+
 inputs_train = inputs_train.reshape(-1,28,28,1)
 inputs_test = inputs_test.reshape(-1,28,28,1)
 
+# afin d'améliorer le CNN
+# #Data augmentation
+# data_augmentation = keras.Sequential(
+#     [
+#         keras.layers.experimental.preprocessing.RandomFlip("horizontal"),
+#         keras.layers.experimental.preprocessing.RandomRotation(0.1),
+#         keras.layers.experimental.preprocessing.RandomZoom(0.1),
+#     ]
+# )
+
 #Using the data to train a Convolutional Neural Network 
 model = keras.Sequential([
+    # data_augmentation,
     keras.layers.Conv2D(64, (3,3), activation='relu', input_shape=(28,28,1)),
     keras.layers.MaxPooling2D(2,2),
     keras.layers.Conv2D(64, (3,3), activation='relu'),
