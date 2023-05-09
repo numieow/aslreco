@@ -7,13 +7,22 @@ import pandas as pd
 #An array containing the alphabet
 alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-#Importing data from data/sign_mnist_train.csv
-testing = pd.read_csv('data\sign_mnist_test.csv', delimiter=',')
+#Importing data from data/sign_mnist_test.csv
+testing = pd.read_csv('data/sign_mnist_test.csv', delimiter=',')
 inputs_test = testing.iloc[:, 1:].to_numpy()
 targets_test = testing['label'].to_numpy()
+#Importing data from data/sign_mnist_train.csv
+training = pd.read_csv('data/sign_mnist_train.csv', delimiter=',')
+inputs_train = training.iloc[:, 1:].to_numpy()
+targets_train = training['label'].to_numpy()
+
 
 #Normalize inputs
+inputs_train = inputs_train / 255.0
 inputs_test = inputs_test / 255.0
+mean = np.mean(inputs_train)
+std = np.std(inputs_train)
+inputs_test = (inputs_test - mean) / std
 inputs_test = inputs_test.reshape(-1,28,28,1)
 
 #Load the model
@@ -37,4 +46,5 @@ for i in range(25):
     plt.xlabel(alphabet[np.argmax(predictions[i])])
 
 #Save the plot
+plt.show()
 plt.savefig('results.png')

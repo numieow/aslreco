@@ -8,7 +8,7 @@ alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'
 
 
 #Importing data from data/sign_mnist_train.csv
-training = pd.read_csv('data\sign_mnist_train.csv', delimiter=',')
+training = pd.read_csv('data/sign_mnist_train.csv', delimiter=',')
 
 #Gathering the data from the database
 inputs_train = training.iloc[:, 1:].to_numpy()
@@ -17,6 +17,9 @@ targets_train = training['label'].to_numpy()
 
 #Normalize inputs
 inputs_train = inputs_train / 255.0
+mean = np.mean(inputs_train)
+std = np.std(inputs_train)
+inputs_train = (inputs_train - mean) / std
 inputs_train = inputs_train.reshape(-1,28,28,1)
 
 #Using the data to train a Convolutional Neural Network 

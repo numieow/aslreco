@@ -51,6 +51,9 @@ inputs_test = inputs_test.reshape(-1,28,28,1)
 #Using the data to train a Convolutional Neural Network 
 model = keras.Sequential([
     # data_augmentation,
+    keras.layers.experimental.preprocessing.RandomFlip("horizontal"),
+    keras.layers.experimental.preprocessing.RandomRotation(0.1),
+    keras.layers.experimental.preprocessing.RandomZoom(0.1),
     keras.layers.Conv2D(64, (3,3), activation='relu', input_shape=(28,28,1)),
     keras.layers.MaxPooling2D(2,2),
     keras.layers.Conv2D(64, (3,3), activation='relu'),
