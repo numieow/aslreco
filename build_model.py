@@ -29,15 +29,15 @@ model = keras.Sequential([ #Creating the model
     keras.layers.Conv2D(64, (3,3), activation='relu'), #Convolutional layer with 64 filters, 3x3 kernel size and relu activation function
     keras.layers.MaxPooling2D(2,2), #output_shape = math.floor((input_shape - pool_size) / strides) + 1 with strides = 2 and pool_size = 2
     keras.layers.Flatten(), #Flattening the input to a 1D array
-    keras.layers.Dense(128, activation='relu'),  #Dense layer with 128 neurons and relu activation function    max between 0 and x
-    keras.layers.Dense(25, activation='softmax') #Dense layer with 25 neurons and softmax activation function  sum of all outputs = 1
+    keras.layers.Dense(128, activation='relu'),  #Dense layer with 128 neurons and relu activation function    max between 0 and x  128 is a power of 2 and is a common choice for the number of neurons in a hidden layer
+    keras.layers.Dense(25, activation='softmax') #Dense layer with 25 neurons and softmax activation function  sum of all outputs = 1 why 25 ? 25 is the number of classes in the dataset and softmax is used for multiclass classification 
 ])
 
 model.compile(optimizer='adam', # Compiling the model with the adam optimizer which is an extension of the stochastic gradient descent optimizer
                 loss='sparse_categorical_crossentropy', #Using sparse categorical crossentropy as loss function since the targets are integers
-                metrics=['accuracy']) #Using accuracy as metric to evaluate the model
+                metrics=['accuracy']) #Using accuracy as metric to evaluate the model    Calculate how often the predictions equal the labels
 
-model.fit(inputs_train, targets_train, epochs=10) #Training the model with the training data and targets for 10 epochs
+model.fit(inputs_train, targets_train, epochs=4) #Training the model with the training data and targets for 10 epochs
 
 #Testing the model
 '''
